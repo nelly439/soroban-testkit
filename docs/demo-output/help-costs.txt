@@ -1,0 +1,46 @@
+$ node dist/cli.js costs --help
+Usage: soroban-testkit costs [options] <target>
+
+measure CPU, memory, footprint and fee per function; write or check a cost
+baseline
+
+Arguments:
+  target                             path to a .wasm or .json spec file, or a
+                                     deployed contract ID (C...)
+
+Options:
+  --update-baseline                  write the measured costs to the baseline
+                                     file
+  --check-baseline                   compare with the baseline file; exit 1 if
+                                     any function got more expensive than the
+                                     threshold
+  -c, --config <file>                config file (default:
+                                     ./soroban-testkit.config.{ts,mjs,js,json})
+  --network <name>                   network preset (choices: "testnet",
+                                     "futurenet", "mainnet", "local")
+  --rpc-url <url>                    Stellar RPC URL (env STELLAR_RPC_URL)
+  --network-passphrase <passphrase>  network passphrase (env
+                                     STELLAR_NETWORK_PASSPHRASE)
+  --source-account <account>         source account for simulated transactions
+                                     (env STELLAR_SOURCE_ACCOUNT)
+  --contract-id <id>                 deployed contract to call when the target
+                                     is a local file
+  -n, --runs <n>                     random cases per function and check, after
+                                     boundary cases (default 100)
+  -s, --seed <n>                     seed for input generation (default: random,
+                                     always printed)
+  -f, --function <names>             only test these functions (repeatable or
+                                     comma-separated)
+  --baseline <file>                  baseline file (default
+                                     .soroban-testkit/baseline.json)
+  --threshold <percent>              allowed cost growth in percent before
+                                     cost-regression fails (default 10)
+  --json [file]                      write a JSON report to <file>, or to stdout
+                                     instead of the terminal report
+  --markdown [file]                  write a Markdown report to <file>, or to
+                                     stdout
+  --junit [file]                     write a JUnit XML report to <file>, or to
+                                     stdout
+  --no-color                         disable colors in the terminal report
+  -h, --help                         display help for command
+[exit code 0]

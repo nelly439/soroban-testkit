@@ -1,0 +1,69 @@
+{
+  "name": "soroban-testkit",
+  "version": "0.1.0",
+  "description": "Spec-driven fuzzing, invariant checking and cost-regression testing for Soroban smart contracts via Stellar RPC simulateTransaction.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write .",
+    "test": "vitest run test/unit",
+    "test:e2e": "vitest run test/e2e",
+    "coverage": "vitest run test/unit --coverage",
+    "docs:check": "tsx scripts/docs-check.ts",
+    "demo": "tsx scripts/demo.ts",
+    "prepublishOnly": "npm run build",
+    "demo:rpc": "tsx scripts/demo-rpc.ts",
+    "verify": "tsx scripts/verify.ts",
+    "integration": "tsx scripts/integration.ts"
+  },
+  "keywords": [
+    "stellar",
+    "soroban",
+    "fuzzing",
+    "property-based-testing",
+    "smart-contracts",
+    "testing",
+    "fast-check"
+  ],
+  "author": "soroban-testkit contributors",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.4.0",
+    "commander": "15.1.0",
+    "fast-check": "4.10.2",
+    "tsx": "4.23.15"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "26.6.6",
+    "@vitest/coverage-v8": "4.1.12",
+    "eslint": "10.14.0",
+    "prettier": "3.9.10",
+    "tsup": "8.5.1",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.1",
+    "vitest": "4.1.12"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "bin": {
+    "soroban-testkit": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ]
+}

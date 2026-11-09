@@ -1,0 +1,33 @@
+$ node dist/cli.js fuzz examples/wasm/vault_clean.wasm --contract-id CBRWYZLBNYWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4DZ --config examples/vault-demo/soroban-testkit.config.json --seed 1
+soroban-testkit: fuzzing examples/wasm/vault_clean.wasm with seed 1
+  roll: no-unexpected-trap, deterministic, budget, cost-regression
+  first: no-unexpected-trap, deterministic, budget, cost-regression
+  div_by: no-unexpected-trap, deterministic, read-only, budget, cost-regression
+  balance: no-unexpected-trap, deterministic, read-only, budget, cost-regression
+  compute: no-unexpected-trap, deterministic, budget, cost-regression
+  transfer: no-unexpected-trap, deterministic, budget, balance after transfer is never negative, cost-regression
+soroban-testkit 0.1.0 · fuzz · contract CBRWYZLBNYWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4DZ
+seed 1 · 50 random runs per function and check, after boundary cases · reproduce with --seed 1
+
+  function  checks  inputs  ok  contract err  trap  result
+  roll           4      51  51             0     0  ✓ pass
+  first          4      50  50             0     0  ✓ pass
+  div_by         5      54  53             1     0  ✓ pass
+  balance        5      54  54             0     0  ✓ pass
+  compute        4      51  51             0     0  ✓ pass
+  transfer       5      69  14            55     0  ✓ pass
+
+COSTS (successful simulations; boundary + seeded random inputs)
+  function  samples    cpu max   cpu mean  mem max  fee max (stroops)
+  roll           54    400,000    400,000      n/a              1,290
+  first          54    205,000    202,222      n/a              1,271
+  div_by         56    300,000    300,000      n/a              1,280
+  balance        54    250,000    250,000      n/a              1,325
+  compute        54  1,098,200  1,032,748      n/a              1,360
+  transfer       14    600,000    600,000      n/a              2,110
+
+BASELINE examples/vault-demo/.soroban-testkit/baseline.json (threshold 10%)
+  no function changed by more than 10%
+
+✓ no findings · 671 simulations · 1.6s · seed 1
+[exit code 0]

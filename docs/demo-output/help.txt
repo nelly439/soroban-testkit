@@ -1,0 +1,19 @@
+$ node dist/cli.js --help
+Usage: soroban-testkit [options] [command]
+
+Spec-driven fuzzing, invariant checks and cost-regression testing for Soroban
+contracts (simulation only).
+
+Options:
+  -V, --version               output the version number
+  -h, --help                  display help for command
+
+Commands:
+  inspect [options] <target>  print the contract interface: functions, parameter
+                              and return types, structs, enums, errors
+  fuzz [options] <target>     generate inputs for every function, simulate them,
+                              and run the enabled checks
+  costs [options] <target>    measure CPU, memory, footprint and fee per
+                              function; write or check a cost baseline
+  help [command]              display help for command
+[exit code 0]

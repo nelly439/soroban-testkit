@@ -1,0 +1,22 @@
+$ node dist/cli.js inspect CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --rpc-url http://127.0.0.1:8787
+Contract interface: CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2
+6 functions, 1 type, 0 events
+
+FUNCTIONS
+  div_by(amount: i128) -> Result<i128, VaultError>
+      Returns 1_000_000 / amount.
+  first(items: Vec<u32>) -> Option<u32>
+      Returns the first element, if any.
+  balance(who: Address) -> i128
+      Reads the balance of an account.
+  roll(salt: u32) -> u64
+      Derives a number from a salt.
+  compute(n: u32) -> u64
+      Does some arithmetic.
+  transfer(from: Address, to: Address, amount: i128) -> Result<i128, VaultError>
+      Moves amount from `from` to `to`; returns the sender balance after the transfer. Every account starts with 1000.
+
+TYPES
+  error VaultError { DivByZero = 1, NegativeAmount = 2, InsufficientBalance = 3 }
+      Errors returned by the vault.
+[exit code 0]

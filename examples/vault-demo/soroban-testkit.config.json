@@ -1,0 +1,12 @@
+{
+  "rpcUrl": "http://127.0.0.1:8787",
+  "networkPassphrase": "Standalone Network ; February 2017",
+  "runs": 50,
+  "functions": {
+    "balance": { "readOnly": true },
+    "div_by": { "readOnly": true }
+  },
+  "budget": { "cpuInstructions": 100000000 },
+  "baseline": { "path": ".soroban-testkit/baseline.json", "thresholdPercent": 10 },
+  "properties": ["properties.ts"]
+}

@@ -1,0 +1,10 @@
+dist
+coverage
+node_modules
+package-lock.json
+examples/rust-contracts/**/target
+test/e2e/__snapshots__
+test/unit/__snapshots__
+*.wasm
+.verify
+docs/demo-output

@@ -1,0 +1,52 @@
+name: Scoped starter issue (maintainers)
+description: For maintainers. File a scoped issue for new contributors or the Stellar Wave program (see docs/WAVE_ISSUES.md).
+title: ''
+labels: ['wave']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form to file a well-scoped issue. Complexity levels:
+        - **Trivial**: under about 2 hours; documentation or a small, local code change. Also add the `good first issue` label.
+        - **Medium**: a focused feature in one or two modules, with tests and docs.
+        - **High**: design work across several modules; agree the approach in the issue before coding.
+  - type: dropdown
+    id: complexity
+    attributes:
+      label: Complexity
+      options:
+        - Trivial
+        - Medium
+        - High
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: The gap in the current code and why it matters. Reference real files and functions.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: A checklist. Always include tests, docs updates and `make verify` passing.
+      value: |
+        - [ ] ...
+        - [ ] Tests added or updated
+        - [ ] Docs updated (`make docs-check` passes)
+        - [ ] CHANGELOG.md updated under Unreleased
+        - [ ] `make verify` passes
+    validations:
+      required: true
+  - type: textarea
+    id: files
+    attributes:
+      label: Files to look at
+      description: Paths in the repository, one per line.
+      placeholder: |
+        - src/...
+        - test/unit/...
+    validations:
+      required: true

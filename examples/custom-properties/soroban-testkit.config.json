@@ -1,0 +1,14 @@
+{
+  "rpcUrl": "http://127.0.0.1:8787",
+  "networkPassphrase": "Standalone Network ; February 2017",
+  "runs": 50,
+  "generators": {
+    "addresses": ["GAIRCEIRCEIRCEIRCEIRCEIRCEIRCEIRCEIRCEIRCEIRCEIRCEIRCF6M"]
+  },
+  "functions": {
+    "admin": { "readOnly": true },
+    "total_supply": { "readOnly": true },
+    "balance": { "readOnly": true }
+  },
+  "properties": ["token-balances.ts", "access-control.ts", "idempotent-reads.ts"]
+}

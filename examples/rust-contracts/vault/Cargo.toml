@@ -1,0 +1,17 @@
+[package]
+name = "vault"
+version = "0.1.0"
+edition = "2021"
+publish = false
+description = "Example contract for soroban-testkit. Build with --features buggy for the planted-bug version."
+
+[lib]
+crate-type = ["cdylib"]
+doctest = false
+
+[features]
+# Enables the six planted defects used by soroban-testkit's integration test.
+buggy = []
+
+[dependencies]
+soroban-sdk = { workspace = true }

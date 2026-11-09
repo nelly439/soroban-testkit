@@ -1,0 +1,24 @@
+soroban-testkit 0.1.0 · fuzz · contract CBRWYZLBNYWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4DZ
+seed 42 · 5 random runs per function and check, after boundary cases · reproduce with --seed 42
+
+  function  checks  inputs  ok  contract err  trap  result
+  div_by         2      11  10             1     0  ✓ pass
+  first          2       9   9             0     0  ✓ pass
+  balance        3       9   9             0     0  ✓ pass
+  roll           2       9   9             0     0  ✓ pass
+  compute        2       9   9             0     0  ✓ pass
+  transfer       0       0   0             0     0  skipped (skipped by config)
+
+COSTS (successful simulations; boundary + seeded random inputs)
+  function  samples    cpu max   cpu mean  mem max  fee max (stroops)
+  div_by         11    300,000    300,000   75,000              1,280
+  first           9    204,000    202,000   51,000              1,271
+  balance         9    250,000    250,000   62,500              1,325
+  roll            9    400,000    400,000  100,000              1,290
+  compute         9  1,079,400  1,024,622  269,850              1,358
+  transfer  skipped          -          -        -                  -
+
+NOTES
+  - cost-regression skipped: no baseline at .soroban-testkit/baseline.json (create one with "soroban-testkit costs <target> --update-baseline")
+
+✓ no findings · 95 simulations · 1.2s · seed 42

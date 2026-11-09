@@ -1,0 +1,75 @@
+$ node dist/cli.js fuzz examples/wasm/vault_buggy.wasm --contract-id CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --config examples/vault-demo/soroban-testkit.config.json --seed 1
+soroban-testkit: fuzzing examples/wasm/vault_buggy.wasm with seed 1
+  roll: no-unexpected-trap, deterministic, budget, cost-regression
+  first: no-unexpected-trap, deterministic, budget, cost-regression
+  div_by: no-unexpected-trap, deterministic, read-only, budget, cost-regression
+  balance: no-unexpected-trap, deterministic, read-only, budget, cost-regression
+  compute: no-unexpected-trap, deterministic, budget, cost-regression
+  transfer: no-unexpected-trap, deterministic, budget, balance after transfer is never negative, cost-regression
+soroban-testkit 0.1.0 · fuzz · contract CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2
+seed 1 · 50 random runs per function and check, after boundary cases · reproduce with --seed 1
+
+  function  checks  inputs   ok  contract err  trap  result
+  roll           4      51   51             0     0  ✗ 1 finding
+  first          4      50   49             0     1  ✗ 1 finding
+  div_by         5      54   53             0     1  ✗ 1 finding
+  balance        5      54   54             0     0  ✗ 1 finding
+  compute        4      51   51             0     0  ✗ 1 finding
+  transfer       5     196  170            26     0  ✗ 1 finding
+
+FINDINGS (6)
+
+1) deterministic · roll
+   two simulations of the same input gave different results
+   first call:  returned 6912158355717386040
+   second call: returned 6912158355717386091
+   counterexample: salt=0  (minimal as found)
+   seed: 1
+   replay: soroban-testkit fuzz examples/wasm/vault_buggy.wasm --replay examples/vault-demo/.soroban-testkit/replays/deterministic--roll.json
+
+2) no-unexpected-trap · first
+   trapped with Error(WasmVm, InvalidAction)
+   host: called `Option::unwrap()` on a `None` value
+   counterexample: items=[]  (minimal as found)
+   seed: 1
+   replay: soroban-testkit fuzz examples/wasm/vault_buggy.wasm --replay examples/vault-demo/.soroban-testkit/replays/no-unexpected-trap--first.json
+
+3) no-unexpected-trap · div_by
+   trapped with Error(WasmVm, InvalidAction)
+   host: attempt to divide by zero
+   counterexample: amount=0  (minimal as found)
+   seed: 1
+   replay: soroban-testkit fuzz examples/wasm/vault_buggy.wasm --replay examples/vault-demo/.soroban-testkit/replays/no-unexpected-trap--div_by.json
+
+4) read-only · balance
+   function is configured read-only but writes 1 ledger entry: persistent contract data {"symbol":"LastSeen"}
+   counterexample: who="GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF"  (minimal as found)
+   seed: 1
+   replay: soroban-testkit fuzz examples/wasm/vault_buggy.wasm --replay examples/vault-demo/.soroban-testkit/replays/read-only--balance.json
+
+5) custom-property · transfer · "balance after transfer is never negative"
+   property "balance after transfer is never negative" failed: returned false (result: -1)
+   counterexample: from="GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF", to="GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF", amount=1001  (shrunk in 121 steps)
+   seed: 1
+   replay: soroban-testkit fuzz examples/wasm/vault_buggy.wasm --replay examples/vault-demo/.soroban-testkit/replays/custom-property--transfer--balance_after_transfer_is_never_negative.json
+
+6) cost-regression · compute
+   cost grew beyond 10%: CPU max 1098200 -> 1537480 (+40%)
+   costliest input: n=741205982
+   seed: 1
+   replay: soroban-testkit fuzz examples/wasm/vault_buggy.wasm --replay examples/vault-demo/.soroban-testkit/replays/cost-regression--compute.json
+
+COSTS (successful simulations; boundary + seeded random inputs)
+  function  samples    cpu max   cpu mean  mem max  fee max (stroops)
+  roll           54    400,000    400,000      n/a              1,290
+  first          49    205,000    202,449      n/a              1,271
+  div_by         56    300,000    300,000      n/a              1,280
+  balance        54    250,000    250,000      n/a              2,125
+  compute        54  1,537,480  1,445,847      n/a              1,404
+  transfer       43    600,000    600,000      n/a              2,110
+
+BASELINE examples/vault-demo/.soroban-testkit/baseline.json (threshold 10%)
+  regression  compute cpuInstructions: 1,098,200 -> 1,537,480 (+40%)
+
+✗ 6 findings · 745 simulations · 1.9s · seed 1
+[exit code 1]

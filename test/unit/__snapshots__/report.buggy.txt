@@ -1,0 +1,64 @@
+soroban-testkit 0.1.0 · fuzz · contract CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2
+seed 42 · 5 random runs per function and check, after boundary cases · reproduce with --seed 42
+
+  function  checks  inputs  ok  contract err  trap  result
+  div_by         3      11  10             0     1  ✗ 1 finding
+  first          3       9   8             0     1  ✗ 1 finding
+  balance        4       9   9             0     0  ✗ 1 finding
+  roll           4       9   9             0     0  ✗ 1 finding
+  compute        3       9   9             0     0  ✗ 1 finding
+  transfer       0       0   0             0     0  skipped (skipped by config)
+
+FINDINGS (5)
+
+1) no-unexpected-trap · div_by
+   trapped with Error(WasmVm, InvalidAction)
+   host: attempt to divide by zero
+   counterexample: amount=0  (minimal as found)
+   seed: 42
+   replay: soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/no-unexpected-trap--div_by.json
+
+2) no-unexpected-trap · first
+   trapped with Error(WasmVm, InvalidAction)
+   host: called `Option::unwrap()` on a `None` value
+   counterexample: items=[]  (minimal as found)
+   seed: 42
+   replay: soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/no-unexpected-trap--first.json
+
+3) read-only · balance
+   function is configured read-only but writes 1 ledger entry: persistent contract data {"symbol":"LastSeen"}
+   counterexample: who="GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF"  (minimal as found)
+   seed: 42
+   replay: soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/read-only--balance.json
+
+4) deterministic · roll
+   two simulations of the same input gave different results
+   first call:  returned 6912158355717386040
+   second call: returned 6912158355717386049
+   counterexample: salt=0  (minimal as found)
+   seed: 42
+   replay: soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/deterministic--roll.json
+
+5) cost-regression · compute
+   cost grew beyond 10%: CPU max 1079400 -> 1511160 (+40%), memory max 269850 -> 377790 (+40%)
+   costliest input: n=1152992794
+   seed: 42
+   replay: soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/cost-regression--compute.json
+
+COSTS (successful simulations; boundary + seeded random inputs)
+  function  samples    cpu max   cpu mean  mem max  fee max (stroops)
+  div_by         11    300,000    300,000   75,000              1,280
+  first           8    204,000    202,250   51,000              1,271
+  balance         9    250,000    250,000   62,500              2,125
+  roll            9    400,000    400,000  100,000              1,290
+  compute         9  1,511,160  1,434,471  377,790              1,402
+  transfer  skipped          -          -        -                  -
+
+BASELINE .soroban-testkit/baseline.json (threshold 10%)
+  regression  compute cpuInstructions: 1,079,400 -> 1,511,160 (+40%)
+  regression  compute memoryBytes: 269,850 -> 377,790 (+40%)
+  improvement div_by cpuInstructions: 600,000 -> 300,000 (-50%)
+  new function (not in baseline): first
+  missing function (in baseline, not measured): removed
+
+✗ 5 findings · 87 simulations · 1.2s · seed 42

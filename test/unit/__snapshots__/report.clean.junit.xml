@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="soroban-testkit" tests="12" failures="0" skipped="1" time="1.234">
+  <testsuite name="soroban-testkit fuzz CBRWYZLBNYWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4DZ" tests="12" failures="0" skipped="1" time="1.234" timestamp="2026-01-01T00:00:00.000Z">
+    <properties><property name="seed" value="42"/><property name="runs" value="5"/></properties>
+    <testcase classname="div_by" name="div_by › no-unexpected-trap"/>
+    <testcase classname="div_by" name="div_by › deterministic"/>
+    <testcase classname="first" name="first › no-unexpected-trap"/>
+    <testcase classname="first" name="first › deterministic"/>
+    <testcase classname="balance" name="balance › no-unexpected-trap"/>
+    <testcase classname="balance" name="balance › deterministic"/>
+    <testcase classname="balance" name="balance › read-only"/>
+    <testcase classname="roll" name="roll › no-unexpected-trap"/>
+    <testcase classname="roll" name="roll › deterministic"/>
+    <testcase classname="compute" name="compute › no-unexpected-trap"/>
+    <testcase classname="compute" name="compute › deterministic"/>
+    <testcase classname="transfer" name="transfer"><skipped message="skipped by config"/></testcase>
+  </testsuite>
+</testsuites>

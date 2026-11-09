@@ -1,0 +1,20 @@
+$ node dist/cli.js fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --config examples/vault-demo/soroban-testkit.config.json --seed 1 --function div_by --junit
+soroban-testkit: fuzzing CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 with seed 1
+  div_by: no-unexpected-trap, deterministic, read-only, budget, cost-regression
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="soroban-testkit" tests="5" failures="1" skipped="0" time="0.345">
+  <testsuite name="soroban-testkit fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2" tests="5" failures="1" skipped="0" time="0.345" timestamp="2026-11-09T16:13:01.682Z">
+    <properties><property name="seed" value="1"/><property name="runs" value="50"/></properties>
+    <testcase classname="div_by" name="div_by › no-unexpected-trap">
+      <failure type="no-unexpected-trap" message="trapped with Error(WasmVm, InvalidAction)">trapped with Error(WasmVm, InvalidAction)
+counterexample: amount=0  (minimal as found)
+seed: 1
+soroban-testkit fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --replay examples/vault-demo/.soroban-testkit/replays/no-unexpected-trap--div_by.json</failure>
+    </testcase>
+    <testcase classname="div_by" name="div_by › deterministic"/>
+    <testcase classname="div_by" name="div_by › read-only"/>
+    <testcase classname="div_by" name="div_by › budget"/>
+    <testcase classname="div_by" name="div_by › cost-regression"/>
+  </testsuite>
+</testsuites>
+[exit code 1]

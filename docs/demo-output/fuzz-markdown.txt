@@ -1,0 +1,31 @@
+$ node dist/cli.js fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --config examples/vault-demo/soroban-testkit.config.json --seed 1 --function div_by,first --markdown
+soroban-testkit: fuzzing CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 with seed 1
+  div_by: no-unexpected-trap, deterministic, read-only, budget, cost-regression
+  first: no-unexpected-trap, deterministic, budget, cost-regression
+## soroban-testkit fuzz: ❌ 2 findings
+
+Contract `CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2` · seed `1` · 50 random runs · 215 simulations
+
+| # | check | function | message | counterexample |
+|---|---|---|---|---|
+| 1 | `no-unexpected-trap` | `div_by` | trapped with Error(WasmVm, InvalidAction) | `amount=0` |
+| 2 | `no-unexpected-trap` | `first` | trapped with Error(WasmVm, InvalidAction) | `items=[]` |
+
+<details><summary>Replay commands</summary>
+
+```sh
+soroban-testkit fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --replay examples/vault-demo/.soroban-testkit/replays/no-unexpected-trap--div_by.json
+soroban-testkit fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --replay examples/vault-demo/.soroban-testkit/replays/no-unexpected-trap--first.json
+```
+
+</details>
+
+| function | checks | inputs | ok | contract err | trap | cpu max | mem max |
+|---|---|---|---|---|---|---|---|
+| `div_by` | 5 | 54 | 53 | 0 | 1 | 300,000 | n/a |
+| `first` | 4 | 50 | 49 | 0 | 1 | 205,000 | n/a |
+
+**Baseline** `examples/vault-demo/.soroban-testkit/baseline.json` (threshold 10%)
+
+- no function changed by more than 10%
+[exit code 1]

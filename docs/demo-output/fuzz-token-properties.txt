@@ -1,0 +1,38 @@
+$ node dist/cli.js fuzz CBSGK3LPFV2G623FNYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUM4 --config examples/custom-properties/soroban-testkit.config.json --seed 1
+soroban-testkit: fuzzing CBSGK3LPFV2G623FNYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUM4 with seed 1
+  admin: no-unexpected-trap, deterministic, read-only, reads are idempotent and write nothing
+  total_supply: no-unexpected-trap, deterministic, read-only, reads are idempotent and write nothing
+  balance: no-unexpected-trap, deterministic, read-only, no balance exceeds the total supply, reads are idempotent and write nothing
+  transfer: no-unexpected-trap, deterministic, sender balance after transfer is never negative
+  mint: no-unexpected-trap, deterministic, only the admin can mint
+soroban-testkit 0.1.0 · fuzz · contract CBSGK3LPFV2G623FNYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUM4
+seed 1 · 50 random runs per function and check, after boundary cases · reproduce with --seed 1
+
+  function      checks  inputs  ok  contract err  trap  result
+  admin              4       1   1             0     0  ✓ pass
+  total_supply       4       1   1             0     0  ✓ pass
+  balance            5      43  43             0     0  ✓ pass
+  transfer           3      71  17            54     0  ✓ pass
+  mint               3      71  32            39     0  ✗ 1 finding
+
+FINDINGS (1)
+
+1) custom-property · mint · "only the admin can mint"
+   property "only the admin can mint" failed: non-admin caller was not rejected (outcome: success) (result: 1000)
+   counterexample: caller="GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF", to="GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF", amount=0  (minimal as found)
+   seed: 1
+   replay: soroban-testkit fuzz CBSGK3LPFV2G623FNYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAUM4 --replay examples/custom-properties/.soroban-testkit/replays/custom-property--mint--only_the_admin_can_mint.json
+
+COSTS (successful simulations; boundary + seeded random inputs)
+  function      samples  cpu max  cpu mean  mem max  fee max (stroops)
+  admin              51  150,000   150,000      n/a              1,315
+  total_supply       51  150,000   150,000      n/a              1,315
+  balance            55  200,000   200,000      n/a              1,320
+  transfer           17  500,000   500,000      n/a              2,100
+  mint               32  450,000   450,000      n/a              2,895
+
+NOTES
+  - cost-regression skipped: no baseline at examples/custom-properties/.soroban-testkit/baseline.json (create one with "soroban-testkit costs <target> --update-baseline")
+
+✗ 1 finding · 699 simulations · 1.7s · seed 1
+[exit code 1]

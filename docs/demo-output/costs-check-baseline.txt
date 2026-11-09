@@ -1,0 +1,41 @@
+$ node dist/cli.js costs CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --config examples/vault-demo/soroban-testkit.config.json --check-baseline
+soroban-testkit: measuring costs of CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2
+  div_by: cost-regression
+  first: cost-regression
+  balance: cost-regression
+  roll: cost-regression
+  compute: cost-regression
+  transfer: cost-regression
+soroban-testkit 0.1.0 · costs · contract CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2
+seed 1 · 50 random runs per function and check, after boundary cases · reproduce with --seed 1
+
+  function  checks  inputs  ok  contract err  trap  result
+  div_by         1      54  53             0     1  ✓ pass
+  first          1      50  49             0     1  ✓ pass
+  balance        1      54  54             0     0  ✓ pass
+  roll           1      51  51             0     0  ✓ pass
+  compute        1      51  51             0     0  ✗ 1 finding
+  transfer       1      69  43            26     0  ✓ pass
+
+FINDINGS (1)
+
+1) cost-regression · compute
+   cost grew beyond 10%: CPU max 1098200 -> 1537480 (+40%)
+   costliest input: n=741205982
+   seed: 1
+   replay: soroban-testkit fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --replay examples/vault-demo/.soroban-testkit/replays/cost-regression--compute.json
+
+COSTS (successful simulations; boundary + seeded random inputs)
+  function  samples    cpu max   cpu mean  mem max  fee max (stroops)
+  div_by         56    300,000    300,000      n/a              1,280
+  first          49    205,000    202,449      n/a              1,271
+  balance        54    250,000    250,000      n/a              2,125
+  roll           54    400,000    400,000      n/a              1,290
+  compute        54  1,537,480  1,445,847      n/a              1,404
+  transfer       43    600,000    600,000      n/a              2,110
+
+BASELINE examples/vault-demo/.soroban-testkit/baseline.json (threshold 10%)
+  regression  compute cpuInstructions: 1,098,200 -> 1,537,480 (+40%)
+
+✗ 1 finding · 329 simulations · 0.9s · seed 1
+[exit code 1]

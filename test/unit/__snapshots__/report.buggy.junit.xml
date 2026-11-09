@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="soroban-testkit" tests="18" failures="5" skipped="1" time="1.234">
+  <testsuite name="soroban-testkit fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2" tests="18" failures="5" skipped="1" time="1.234" timestamp="2026-01-01T00:00:00.000Z">
+    <properties><property name="seed" value="42"/><property name="runs" value="5"/></properties>
+    <testcase classname="div_by" name="div_by › no-unexpected-trap">
+      <failure type="no-unexpected-trap" message="trapped with Error(WasmVm, InvalidAction)">trapped with Error(WasmVm, InvalidAction)
+counterexample: amount=0  (minimal as found)
+seed: 42
+soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/no-unexpected-trap--div_by.json</failure>
+    </testcase>
+    <testcase classname="div_by" name="div_by › deterministic"/>
+    <testcase classname="div_by" name="div_by › cost-regression"/>
+    <testcase classname="first" name="first › no-unexpected-trap">
+      <failure type="no-unexpected-trap" message="trapped with Error(WasmVm, InvalidAction)">trapped with Error(WasmVm, InvalidAction)
+counterexample: items=[]  (minimal as found)
+seed: 42
+soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/no-unexpected-trap--first.json</failure>
+    </testcase>
+    <testcase classname="first" name="first › deterministic"/>
+    <testcase classname="first" name="first › cost-regression"/>
+    <testcase classname="balance" name="balance › no-unexpected-trap"/>
+    <testcase classname="balance" name="balance › deterministic"/>
+    <testcase classname="balance" name="balance › read-only">
+      <failure type="read-only" message="function is configured read-only but writes 1 ledger entry: persistent contract data {&quot;symbol&quot;:&quot;LastSeen&quot;}">function is configured read-only but writes 1 ledger entry: persistent contract data {&quot;symbol&quot;:&quot;LastSeen&quot;}
+counterexample: who=&quot;GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF&quot;  (minimal as found)
+seed: 42
+soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/read-only--balance.json</failure>
+    </testcase>
+    <testcase classname="balance" name="balance › cost-regression"/>
+    <testcase classname="roll" name="roll › no-unexpected-trap"/>
+    <testcase classname="roll" name="roll › deterministic">
+      <failure type="deterministic" message="two simulations of the same input gave different results">two simulations of the same input gave different results
+counterexample: salt=0  (minimal as found)
+seed: 42
+soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/deterministic--roll.json</failure>
+    </testcase>
+    <testcase classname="roll" name="roll › roll is | odd-safe"/>
+    <testcase classname="roll" name="roll › cost-regression"/>
+    <testcase classname="compute" name="compute › no-unexpected-trap"/>
+    <testcase classname="compute" name="compute › deterministic"/>
+    <testcase classname="compute" name="compute › cost-regression">
+      <failure type="cost-regression" message="cost grew beyond 10%: CPU max 1079400 -&gt; 1511160 (+40%), memory max 269850 -&gt; 377790 (+40%)">cost grew beyond 10%: CPU max 1079400 -&gt; 1511160 (+40%), memory max 269850 -&gt; 377790 (+40%)
+costliest input: n=1152992794
+seed: 42
+soroban-testkit fuzz vault.wasm --replay .soroban-testkit/replays/cost-regression--compute.json</failure>
+    </testcase>
+    <testcase classname="transfer" name="transfer"><skipped message="skipped by config"/></testcase>
+  </testsuite>
+</testsuites>

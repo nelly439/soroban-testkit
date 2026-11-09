@@ -1,0 +1,5 @@
+$ node dist/cli.js fuzz CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 --rpc-url http://127.0.0.1:9 --seed 1
+soroban-testkit: fuzzing CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2 with seed 1
+soroban-testkit: RPC unavailable: RPC getNetwork failed after 3 attempt(s) at http://127.0.0.1:9: fetch failed
+This is a transport problem, not a contract bug. No findings were reported.
+[exit code 3]

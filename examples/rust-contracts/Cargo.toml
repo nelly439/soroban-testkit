@@ -1,0 +1,19 @@
+[workspace]
+resolver = "2"
+members = ["vault"]
+
+[workspace.dependencies]
+# soroban-sdk 25.x and later refuse to build without `stellar contract build`
+# (stellar-cli post-processes the spec). 23.5.3 builds with plain cargo, and
+# contracts built with an older SDK keep running on newer protocol versions.
+soroban-sdk = "23.5.3"
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+lto = true

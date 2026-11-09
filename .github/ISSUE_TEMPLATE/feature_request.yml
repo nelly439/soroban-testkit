@@ -1,0 +1,45 @@
+name: Feature request
+description: Suggest a new check, reporter, option or improvement.
+title: 'feat: '
+labels: ['enhancement', 'triage']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What are you trying to do, and what stops you today? Concrete examples (contract code, commands) help most.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would it work? Include the CLI flags, config keys or API you imagine.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you use now (custom properties, scripts, other tools).
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      multiple: true
+      options:
+        - checks
+        - input generation
+        - reporters
+        - cost baseline
+        - CLI
+        - config
+        - RPC / networks
+        - docs / examples
+        - other
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contribution
+      options:
+        - label: I would like to implement this myself.

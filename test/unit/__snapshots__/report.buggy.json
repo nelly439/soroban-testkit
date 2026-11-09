@@ -1,0 +1,357 @@
+{
+  "tool": {
+    "name": "soroban-testkit",
+    "version": "0.1.0"
+  },
+  "mode": "fuzz",
+  "contractId": "CBRHKZ3HPEWXMYLVNR2AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABDL2",
+  "seed": 42,
+  "runs": 5,
+  "startedAt": "2026-01-01T00:00:00.000Z",
+  "durationMs": 1234,
+  "findings": [
+    {
+      "check": "no-unexpected-trap",
+      "function": "div_by",
+      "message": "trapped with Error(WasmVm, InvalidAction)",
+      "counterexample": {
+        "args": {
+          "amount": {
+            "$bigint": "0"
+          }
+        },
+        "display": "amount=0",
+        "argsXdr": [
+          "AAAACgAAAAAAAAAAAAAAAAAAAAA="
+        ]
+      },
+      "shrunk": true,
+      "shrinkSteps": 0,
+      "details": {
+        "error": "WasmVm, InvalidAction",
+        "hostDetail": "attempt to divide by zero"
+      },
+      "seed": 42,
+      "replayFile": ".soroban-testkit/replays/no-unexpected-trap--div_by.json"
+    },
+    {
+      "check": "no-unexpected-trap",
+      "function": "first",
+      "message": "trapped with Error(WasmVm, InvalidAction)",
+      "counterexample": {
+        "args": {
+          "items": []
+        },
+        "display": "items=[]",
+        "argsXdr": [
+          "AAAAEAAAAAEAAAAA"
+        ]
+      },
+      "shrunk": true,
+      "shrinkSteps": 0,
+      "details": {
+        "error": "WasmVm, InvalidAction",
+        "hostDetail": "called `Option::unwrap()` on a `None` value"
+      },
+      "seed": 42,
+      "replayFile": ".soroban-testkit/replays/no-unexpected-trap--first.json"
+    },
+    {
+      "check": "read-only",
+      "function": "balance",
+      "message": "function is configured read-only but writes 1 ledger entry: persistent contract data {\"symbol\":\"LastSeen\"}",
+      "counterexample": {
+        "args": {
+          "who": "GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF"
+        },
+        "display": "who=\"GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF\"",
+        "argsXdr": [
+          "AAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+        ]
+      },
+      "shrunk": true,
+      "shrinkSteps": 0,
+      "details": {
+        "writeEntries": 1,
+        "writeBytes": 80,
+        "keys": [
+          "persistent contract data {\"symbol\":\"LastSeen\"}"
+        ]
+      },
+      "seed": 42,
+      "replayFile": ".soroban-testkit/replays/read-only--balance.json"
+    },
+    {
+      "check": "deterministic",
+      "function": "roll",
+      "message": "two simulations of the same input gave different results",
+      "counterexample": {
+        "args": {
+          "salt": 0
+        },
+        "display": "salt=0",
+        "argsXdr": [
+          "AAAAAwAAAAA="
+        ]
+      },
+      "shrunk": true,
+      "shrinkSteps": 0,
+      "details": {
+        "first": "returned 6912158355717386040",
+        "second": "returned 6912158355717386049"
+      },
+      "seed": 42,
+      "replayFile": ".soroban-testkit/replays/deterministic--roll.json"
+    },
+    {
+      "check": "cost-regression",
+      "function": "compute",
+      "message": "cost grew beyond 10%: CPU max 1079400 -> 1511160 (+40%), memory max 269850 -> 377790 (+40%)",
+      "counterexample": {
+        "args": {
+          "n": 1152992794
+        },
+        "display": "n=1152992794",
+        "argsXdr": [
+          "AAAAA0S5Rho="
+        ]
+      },
+      "shrunk": false,
+      "shrinkSteps": 0,
+      "details": {
+        "deltas": [
+          {
+            "function": "compute",
+            "metric": "cpuInstructions",
+            "baseline": 1079400,
+            "current": 1511160,
+            "changePercent": 40
+          },
+          {
+            "function": "compute",
+            "metric": "memoryBytes",
+            "baseline": 269850,
+            "current": 377790,
+            "changePercent": 40
+          }
+        ]
+      },
+      "seed": 42,
+      "replayFile": ".soroban-testkit/replays/cost-regression--compute.json"
+    }
+  ],
+  "functions": [
+    {
+      "name": "div_by",
+      "checks": [
+        "no-unexpected-trap",
+        "deterministic",
+        "cost-regression"
+      ],
+      "inputs": 11,
+      "outcomes": {
+        "success": 10,
+        "contractError": 0,
+        "trap": 1,
+        "simulationFailed": 0
+      },
+      "costs": {
+        "samples": 11,
+        "cpuInstructions": {
+          "min": 300000,
+          "max": 300000,
+          "mean": 300000
+        },
+        "memoryBytes": {
+          "min": 75000,
+          "max": 75000,
+          "mean": 75000
+        },
+        "maxMinResourceFee": "1280",
+        "maxWriteEntries": 0,
+        "costliestInput": "amount=1"
+      }
+    },
+    {
+      "name": "first",
+      "checks": [
+        "no-unexpected-trap",
+        "deterministic",
+        "cost-regression"
+      ],
+      "inputs": 9,
+      "outcomes": {
+        "success": 8,
+        "contractError": 0,
+        "trap": 1,
+        "simulationFailed": 0
+      },
+      "costs": {
+        "samples": 8,
+        "cpuInstructions": {
+          "min": 201000,
+          "max": 204000,
+          "mean": 202250
+        },
+        "memoryBytes": {
+          "min": 50250,
+          "max": 51000,
+          "mean": 50563
+        },
+        "maxMinResourceFee": "1271",
+        "maxWriteEntries": 0,
+        "costliestInput": "items=[1570664410, 1275475127, 3741893065, 861580584]"
+      }
+    },
+    {
+      "name": "balance",
+      "checks": [
+        "no-unexpected-trap",
+        "deterministic",
+        "read-only",
+        "cost-regression"
+      ],
+      "inputs": 9,
+      "outcomes": {
+        "success": 9,
+        "contractError": 0,
+        "trap": 0,
+        "simulationFailed": 0
+      },
+      "costs": {
+        "samples": 9,
+        "cpuInstructions": {
+          "min": 250000,
+          "max": 250000,
+          "mean": 250000
+        },
+        "memoryBytes": {
+          "min": 62500,
+          "max": 62500,
+          "mean": 62500
+        },
+        "maxMinResourceFee": "2125",
+        "maxWriteEntries": 1,
+        "costliestInput": "who=\"GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWHF\""
+      }
+    },
+    {
+      "name": "roll",
+      "checks": [
+        "no-unexpected-trap",
+        "deterministic",
+        "roll is | odd-safe",
+        "cost-regression"
+      ],
+      "inputs": 9,
+      "outcomes": {
+        "success": 9,
+        "contractError": 0,
+        "trap": 0,
+        "simulationFailed": 0
+      },
+      "costs": {
+        "samples": 9,
+        "cpuInstructions": {
+          "min": 400000,
+          "max": 400000,
+          "mean": 400000
+        },
+        "memoryBytes": {
+          "min": 100000,
+          "max": 100000,
+          "mean": 100000
+        },
+        "maxMinResourceFee": "1290",
+        "maxWriteEntries": 0,
+        "costliestInput": "salt=0"
+      }
+    },
+    {
+      "name": "compute",
+      "checks": [
+        "no-unexpected-trap",
+        "deterministic",
+        "cost-regression"
+      ],
+      "inputs": 9,
+      "outcomes": {
+        "success": 9,
+        "contractError": 0,
+        "trap": 0,
+        "simulationFailed": 0
+      },
+      "costs": {
+        "samples": 9,
+        "cpuInstructions": {
+          "min": 1400000,
+          "max": 1511160,
+          "mean": 1434471
+        },
+        "memoryBytes": {
+          "min": 350000,
+          "max": 377790,
+          "mean": 358618
+        },
+        "maxMinResourceFee": "1402",
+        "maxWriteEntries": 0,
+        "costliestInput": "n=1152992794"
+      }
+    },
+    {
+      "name": "transfer",
+      "checks": [],
+      "inputs": 0,
+      "outcomes": {
+        "success": 0,
+        "contractError": 0,
+        "trap": 0,
+        "simulationFailed": 0
+      },
+      "costs": null,
+      "skipped": "skipped by config"
+    }
+  ],
+  "simulations": 87,
+  "simulationFailures": [],
+  "notes": [],
+  "baseline": {
+    "path": ".soroban-testkit/baseline.json",
+    "seed": 42,
+    "runs": 5,
+    "comparison": {
+      "thresholdPercent": 10,
+      "regressions": [
+        {
+          "function": "compute",
+          "metric": "cpuInstructions",
+          "baseline": 1079400,
+          "current": 1511160,
+          "changePercent": 40
+        },
+        {
+          "function": "compute",
+          "metric": "memoryBytes",
+          "baseline": 269850,
+          "current": 377790,
+          "changePercent": 40
+        }
+      ],
+      "improvements": [
+        {
+          "function": "div_by",
+          "metric": "cpuInstructions",
+          "baseline": 600000,
+          "current": 300000,
+          "changePercent": -50
+        }
+      ],
+      "newFunctions": [
+        "first"
+      ],
+      "missingFunctions": [
+        "removed"
+      ]
+    }
+  }
+}

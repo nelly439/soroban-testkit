@@ -1,0 +1,24 @@
+$ node dist/cli.js inspect --help
+Usage: soroban-testkit inspect [options] <target>
+
+print the contract interface: functions, parameter and return types, structs,
+enums, errors
+
+Arguments:
+  target                             path to a .wasm or .json spec file, or a
+                                     deployed contract ID (C...)
+
+Options:
+  --json                             print the spec as JSON (usable as a spec
+                                     file)
+  -c, --config <file>                config file (default:
+                                     ./soroban-testkit.config.{ts,mjs,js,json})
+  --network <name>                   network preset (choices: "testnet",
+                                     "futurenet", "mainnet", "local")
+  --rpc-url <url>                    Stellar RPC URL (env STELLAR_RPC_URL)
+  --network-passphrase <passphrase>  network passphrase (env
+                                     STELLAR_NETWORK_PASSPHRASE)
+  --source-account <account>         source account for simulated transactions
+                                     (env STELLAR_SOURCE_ACCOUNT)
+  -h, --help                         display help for command
+[exit code 0]
